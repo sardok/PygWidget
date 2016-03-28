@@ -42,11 +42,10 @@ class Speedometer(TrigonometryMixin, pygame.sprite.Sprite):
             self.image = image
             self.bgimage = image.copy()
             self.bgcolor = None
-            if not (scale_anchor_x and scale_anchor_y and
-                        (indicator_length or indicator_image_path)):
+            if not (scale_anchor_x and scale_anchor_y):
                 raise RuntimeError(
-                    ('If background image is given, indicator properties such '
-                     'as x, y and length (or image) must be provided as well.'))
+                    ('If background image is given, indicator anchor must be '
+                     'provided as well.'))
             self.scale_anchor = (scale_anchor_x, scale_anchor_y)
             self.scale_radius = scale_radius
         else:
@@ -77,7 +76,8 @@ class Speedometer(TrigonometryMixin, pygame.sprite.Sprite):
                 ('Cannot determine scale radius, either provide scale_radius or'
                  ' indicator_length or indicator_image_path'))
 
-        self.indicator_anchor_height = indicator_anchor_height or 0
+        self.indicator_anchor_height = indicator_anchor_height or \
+                                       self.indicator_length
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
